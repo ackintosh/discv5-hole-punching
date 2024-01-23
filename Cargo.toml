@@ -1,0 +1,14 @@
+[package]
+name = "discv5-hole-punching"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# Nat hole punching for discv5.2
+# https://github.com/sigp/discv5/pull/176
+discv5 = { git = "https://github.com/emhane/discv5.git", rev = "61875972eeeb858b3c20a18032ada604d46fd9ee"}
+
+if-addrs = "0.11.0"
+tokio = { version = "1.35.1", features = ["macros", "rt-multi-thread"] }
