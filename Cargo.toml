@@ -10,8 +10,10 @@ edition = "2021"
 # https://github.com/sigp/discv5/pull/176
 discv5 = { git = "https://github.com/emhane/discv5.git", rev = "61875972eeeb858b3c20a18032ada604d46fd9ee"}
 
-if-addrs = "0.11.0"
-redis = { version = "0.24.0", features = ["tokio-comp"] }
+if-addrs = "0.11"
+redis = { version = "0.24", features = ["tokio-comp"] }
 serde = "1.0"
 serde_json = "1.0"
-tokio = { version = "1.35.1", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1.35", features = ["macros", "rt-multi-thread"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"

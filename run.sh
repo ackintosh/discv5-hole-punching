@@ -19,4 +19,4 @@ until redis-cli -h redis ping > /dev/null; do
   sleep 1
 done
 
-/usr/local/bin/discv5-hole-punching "$1"
+RUST_LOG=discv5=debug /usr/local/bin/discv5-hole-punching "$1"
