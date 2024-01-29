@@ -3,6 +3,7 @@ use redis::{AsyncCommands, Client};
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::collections::HashMap;
+use std::time::Duration;
 
 pub(crate) struct RedisClient {
     inner: Connection,
@@ -16,6 +17,7 @@ impl RedisClient {
         RedisClient { inner: connection }
     }
 
+    /// Push an element at the tail of the list
     pub(crate) async fn push<V: Serialize + DeserializeOwned>(&mut self, key: &str, value: V) {
         let _: () = self
             .inner
@@ -24,6 +26,7 @@ impl RedisClient {
             .unwrap();
     }
 
+    /// Pop the first element in a list, or block until one is available.
     pub(crate) async fn pop<V: DeserializeOwned>(&mut self, key: &str) -> V {
         let mut value = self
             .inner
@@ -31,5 +34,18 @@ impl RedisClient {
             .await
             .unwrap();
         serde_json::from_str(value.remove(key).unwrap().as_str()).unwrap()
+    }
+
+    /// Signal an entry on the given key and then wait until the specified value has been reached.
+    pub(crate) async fn signal_and_wait(&mut self, key: &str, target: u64) {
+        let mut count: u64 = self.inner.incr(key, 1_u64).await.unwrap();
+
+        loop {
+            if count >= target {
+                break;
+            }
+            tokio::time::sleep(Duration::from_millis(100)).await;
+            count = self.inner.get(key).await.unwrap();
+        }
     }
 }

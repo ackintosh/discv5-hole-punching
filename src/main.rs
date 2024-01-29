@@ -1,15 +1,23 @@
+mod initiator;
 mod redis;
 mod relay;
 mod target;
-mod initiator;
 
 use crate::redis::RedisClient;
 use discv5::enr::{CombinedKey, EnrBuilder};
 use discv5::{Discv5, ListenConfig};
 use std::net::IpAddr;
 
+// Redis key name to store ENRs.
 const REDIS_KEY_RELAY_ENR: &str = "RELAY_ENR";
 const REDIS_KEY_TARGET_ENR: &str = "TARGET_ENR";
+
+// Redis keys to sync test sequence. These are used by `Redis::signal_and_wait()`.
+const REDIS_KEY_READY_TO_TEST: &str = "READY_TO_TEST";
+const REDIS_KEY_TEST_COMPLETED: &str = "TEST_COMPLETED";
+
+// Number of nodes participating in this simulation.
+const NUMBER_OF_NODES: u64 = 3;
 
 #[tokio::main]
 async fn main() {
