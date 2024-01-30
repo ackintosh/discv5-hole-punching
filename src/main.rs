@@ -5,10 +5,11 @@ mod target;
 
 use crate::redis::RedisClient;
 use discv5::enr::{CombinedKey, EnrBuilder};
-use discv5::{Discv5, ListenConfig};
+use discv5::{Discv5, Enr, ListenConfig};
 use std::net::IpAddr;
 
 // Redis key name to store ENRs.
+const REDIS_KEY_INITIATOR_ENR: &str = "INITIATOR_ENR";
 const REDIS_KEY_RELAY_ENR: &str = "RELAY_ENR";
 const REDIS_KEY_TARGET_ENR: &str = "TARGET_ENR";
 
@@ -40,25 +41,12 @@ async fn main() {
     // Redis client
     let redis = RedisClient::new().await;
 
-    // TODO: clean up redis
-
     match args.get(1).unwrap().as_str() {
         "initiator" => initiator::run(redis).await,
         "relay" => relay::run(redis).await,
         "target" => target::run(redis).await,
         _ => panic!("Invalid actor"),
     }
-}
-
-fn get_ip() -> IpAddr {
-    let interface = if_addrs::get_if_addrs()
-        .unwrap()
-        .iter()
-        .find(|interface| !interface.is_loopback() && !interface.is_link_local())
-        .expect("")
-        .clone();
-
-    interface.addr.ip()
 }
 
 async fn start_discv5(ip: IpAddr) -> Discv5 {
@@ -79,4 +67,10 @@ async fn start_discv5(ip: IpAddr) -> Discv5 {
 
     discv5.start().await.expect("Start Discovery v5 server");
     discv5
+}
+
+async fn publish_enr(redis: &mut RedisClient, key: &str, enr: Enr) {
+    for _ in 0..NUMBER_OF_NODES - 1 {
+        redis.push(key, enr.clone()).await;
+    }
 }
