@@ -43,6 +43,4 @@ pub(crate) async fn run(mut redis: RedisClient) {
     if !entries.iter().any(|entry| entry.0 == target_enr.node_id()) {
         panic!("target's ENR not found in the DHT.");
     }
-
-    println!("Test completed successfully.");
 }

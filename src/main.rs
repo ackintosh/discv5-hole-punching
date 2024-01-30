@@ -47,6 +47,8 @@ async fn main() {
         "target" => target::run(redis).await,
         _ => panic!("Invalid actor"),
     }
+
+    println!("Test completed successfully.");
 }
 
 async fn start_discv5(ip: IpAddr) -> Discv5 {

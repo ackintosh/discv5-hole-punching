@@ -27,6 +27,4 @@ pub(crate) async fn run(mut redis: RedisClient) {
     redis
         .signal_and_wait(REDIS_KEY_TEST_COMPLETED, NUMBER_OF_NODES)
         .await;
-
-    println!("Test completed successfully.");
 }

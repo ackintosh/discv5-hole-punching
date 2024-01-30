@@ -41,6 +41,4 @@ pub(crate) async fn run(mut redis: RedisClient) {
     {
         panic!("initiator's ENR not found in the DHT.");
     }
-
-    println!("Test completed successfully.");
 }
