@@ -6,9 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-# Nat hole punching for discv5.2
-# https://github.com/sigp/discv5/pull/176
-discv5 = { git = "https://github.com/emhane/discv5.git", rev = "61875972eeeb858b3c20a18032ada604d46fd9ee"}
+# discv5.2 branch
+# https://github.com/sigp/discv5/commits/discv5.2/
+discv5 = { git = "https://github.com/sigp/discv5.git", rev = "04f2dc62142481bec3f178542fa10405dc50ea6c"}
 
 if-addrs = "0.11"
 redis = { version = "0.24", features = ["tokio-comp"] }
