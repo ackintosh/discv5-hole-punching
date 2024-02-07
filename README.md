@@ -45,8 +45,8 @@ Also, three segments in the network.
 ```mermaid
 graph TD
   relay_node[10.0.0.30/24]
-  relay_node---target_router[10.0.0.40/24<br><br>172.16.0.40/24]
-  relay_node---initiator_router[10.0.0.20/24<br><br>192.168.0.20/24]
+  relay_node---target_router[10.0.0.40/24<br> . <br>172.16.0.40/24]
+  relay_node---initiator_router[10.0.0.20/24<br> . <br>192.168.0.20/24]
   
   initiator_router---initiator_node(192.168.0.10/24)
   target_router---target_node(172.16.0.50/24)
