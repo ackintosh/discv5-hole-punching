@@ -1,0 +1,87 @@
+services:
+  initiator:
+    build: .
+    networks:
+      lan_initiator:
+        ipv4_address: 192.168.0.10
+    cap_add:
+      - NET_ADMIN
+    command:
+      - "initiator" # actor
+      - "10.0.0.0/24" # internet_subnet
+      - "192.168.0.20" # router_ip
+    depends_on:
+      - redis
+  initiator_router:
+    build: router
+    networks:
+      lan_initiator:
+        ipv4_address: 192.168.0.20
+      internet:
+        ipv4_address: 10.0.0.20
+    cap_add:
+      - NET_ADMIN
+    command:
+      - "192.168.0.10" # initiator ip address
+  relay:
+    build: .
+    networks:
+      internet:
+        ipv4_address: 10.0.0.30
+    command:
+      - "relay" # actor
+    depends_on:
+      - redis
+  target_router:
+    build: router
+    networks:
+      lan_target:
+        ipv4_address: 172.16.0.40
+      internet:
+        ipv4_address: 10.0.0.40
+    cap_add:
+      - NET_ADMIN
+    command:
+      - "172.16.0.50" # target ip address
+  target:
+    build: .
+    networks:
+      lan_target:
+        ipv4_address: 172.16.0.50
+    cap_add:
+      - NET_ADMIN
+    command:
+      - "target" # actor
+      - "10.0.0.0/24" # internet_subnet
+      - "172.16.0.40" # router_ip
+    depends_on:
+      - redis
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "redis-cli ping | grep PONG"
+    ports:
+      - "6379:6379"
+    networks:
+      lan_initiator:
+        aliases: ["redis"]
+      lan_target:
+        aliases: ["redis"]
+      internet:
+        aliases: ["redis"]
+
+networks:
+  lan_initiator:
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24
+  lan_target:
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
+  internet:
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
