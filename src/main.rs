@@ -4,7 +4,7 @@ mod relay;
 mod target;
 
 use crate::redis::RedisClient;
-use discv5::enr::{CombinedKey, EnrBuilder};
+use discv5::enr::CombinedKey;
 use discv5::{Discv5, Enr, ListenConfig};
 use std::net::IpAddr;
 
@@ -54,7 +54,7 @@ async fn main() {
 async fn start_discv5(ip: IpAddr) -> Discv5 {
     let enr_key = CombinedKey::generate_secp256k1();
 
-    let enr = EnrBuilder::new("v4")
+    let enr = Enr::builder()
         .ip(ip)
         .udp4(9000)
         .build(&enr_key)
@@ -63,7 +63,7 @@ async fn start_discv5(ip: IpAddr) -> Discv5 {
     let mut discv5: Discv5 = Discv5::new(
         enr,
         enr_key,
-        discv5::Discv5ConfigBuilder::new(ListenConfig::default()).build(),
+        discv5::ConfigBuilder::new(ListenConfig::default()).build(),
     )
     .unwrap();
 
