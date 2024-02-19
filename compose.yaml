@@ -13,7 +13,8 @@ services:
       - "10.0.0.0/24" # internet_subnet
       - "192.168.0.20" # router_ip
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
   initiator_router:
     build: router
     networks:
@@ -35,7 +36,8 @@ services:
     command:
       - "relay" # actor
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
   target_router:
     build: router
     networks:
@@ -61,7 +63,8 @@ services:
       - "10.0.0.0/24" # internet_subnet
       - "172.16.0.40" # router_ip
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
   redis:
     image: redis:7-alpine
     healthcheck:
