@@ -14,7 +14,7 @@ RUN --mount=type=cache,target=./target \
 RUN --mount=type=cache,target=./target \
     mv ./target/release/discv5-hole-punching /usr/local/bin/discv5-hole-punching
 
-COPY run.sh /scripts/
+COPY ./node/run.sh /scripts/
 RUN chmod +x /scripts/*.sh
 
 ENTRYPOINT ["/scripts/run.sh"]

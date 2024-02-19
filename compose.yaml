@@ -1,6 +1,8 @@
 services:
   initiator:
-    build: .
+    build:
+      context: .
+      dockerfile: ./node/Dockerfile
     networks:
       lan_initiator:
         ipv4_address: 192.168.0.10
@@ -24,7 +26,9 @@ services:
     command:
       - "192.168.0.10" # initiator ip address
   relay:
-    build: .
+    build:
+      context: .
+      dockerfile: ./node/Dockerfile
     networks:
       internet:
         ipv4_address: 10.0.0.30
@@ -44,7 +48,9 @@ services:
     command:
       - "172.16.0.50" # target ip address
   target:
-    build: .
+    build:
+      context: .
+      dockerfile: ./node/Dockerfile
     networks:
       lan_target:
         ipv4_address: 172.16.0.50
