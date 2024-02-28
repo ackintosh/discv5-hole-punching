@@ -55,9 +55,9 @@ dependencies = [
 
 [[package]]
 name = "ahash"
-version = "0.8.8"
+version = "0.8.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "42cd52102d3df161c77a887b608d7a4897d7cc112886a9537b738a887a03aaff"
+checksum = "8b79b82693f705137f8fb9b37871d99e4f9a7df12b917eed79c3d3954830a60b"
 dependencies = [
  "cfg-if",
  "once_cell",
@@ -327,7 +327,7 @@ dependencies = [
 [[package]]
 name = "discv5"
 version = "0.4.1"
-source = "git+https://github.com/ackintosh/discv5.git?rev=c58677e387f27bd075b671ea5d5410a64ffd9bb4#c58677e387f27bd075b671ea5d5410a64ffd9bb4"
+source = "git+https://github.com/sigp/discv5.git?branch=discv5.2#088a171fadf152ab4784e7cb891ae877a25231e3"
 dependencies = [
  "aes",
  "aes-gcm",
@@ -751,9 +751,9 @@ checksum = "b5e6163cb8c49088c2c36f57875e58ccd8c87c7427f7fbd50ea6710b2f3f2e8f"
 
 [[package]]
 name = "lru"
-version = "0.12.2"
+version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "db2c024b41519440580066ba82aab04092b333e09066a5eb86c7c4890df31f22"
+checksum = "d3262e75e648fce39813cb56ac41f3c3e3f65217ebf3844d818d1f9398cfb0dc"
 
 [[package]]
 name = "matchers"
