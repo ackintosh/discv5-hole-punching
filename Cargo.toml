@@ -8,11 +8,7 @@ edition = "2021"
 [dependencies]
 # discv5.2 branch
 # https://github.com/sigp/discv5/commits/discv5.2/
-#discv5 = { git = "https://github.com/sigp/discv5.git", rev = "04f2dc62142481bec3f178542fa10405dc50ea6c"}
-
-# Merge master into discv5.2
-# https://github.com/sigp/discv5/pull/234
-discv5 = { git = "https://github.com/ackintosh/discv5.git", rev = "c58677e387f27bd075b671ea5d5410a64ffd9bb4"}
+discv5 = { git = "https://github.com/sigp/discv5.git", branch = "discv5.2"}
 
 if-addrs = "0.11"
 redis = { version = "0.24", features = ["tokio-comp"] }
